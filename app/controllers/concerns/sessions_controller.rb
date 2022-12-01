@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
-    before_action :set_user, only: %i[ show edit update destroy ]
-  
+  #before action lo tuve que sacar xq no me dejaba deslogearme
+  #    before_action :set_user, only: %i[ show edit update destroy ]
+    skip_before_action :protect_pages
+    
     # GET /users/new
     def new
     end
@@ -10,22 +12,15 @@ class SessionsController < ApplicationController
       #buscar usuario si el username es igual :login
         @user = User.find_by("username = :login OR username = :login", {login: params[:login]})
         if @user&.authenticate(params[:password_digest])
+          session[:user_id] = @user.id
           redirect_to banks_url, notice: "login successfully"            
         else
           redirect_to banks_url, notice: "login failed"  
         end
-      #@user = User.new(user_params)
-  
-      #if @user.save
-      # redirect_to @user, notice: "User was successfully created."
-      #else
-      #  render :new, status: :unprocessable_entity
-      #end
     end
-  
-  
-      # Only allow a list of trusted parameters through.
-      #def user_params
-      #  params.require(:user).permit(:username, :password, :roll)
-      #end
+
+    def destroy
+      session.delete(:user_id)
+      redirect_to new_session_path , notice: "logout successfully"
+    end
   end

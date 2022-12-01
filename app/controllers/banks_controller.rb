@@ -1,6 +1,6 @@
 class BanksController < ApplicationController
   before_action :set_bank, only: %i[ show edit update destroy ]
-
+  skip_before_action :protect_pages, only: [:index, :show]
   # GET /banks
   def index
     @banks = Bank.all
