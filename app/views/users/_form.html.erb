@@ -23,7 +23,7 @@
 
   <div>
     <%= form.label :roll, style: "display: block" %>
-    <%= form.text_field :roll %>
+    <%= form.select :roll, options_for_select([["Administrador", "Administrador"], ["Personal bancario", "Personal bancario"], ["Cliente", "Cliente"]]) %>
   </div>
 
   <div>
