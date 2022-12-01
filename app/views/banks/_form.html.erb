@@ -12,6 +12,8 @@
   <% end %>
 
   <%= Current.user.inspect %>
+  Are you admin? <%= Current.user.has_role? :Administrador %>
+  #mostrar todos los roles del usuario
   
 
   <div>

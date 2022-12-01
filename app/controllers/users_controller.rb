@@ -22,7 +22,8 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-
+    #agregar el rol al usuario
+    @user.add_role(user_params[:roll])
     if @user.save
       redirect_to @user, notice: "User was successfully created."
     else
