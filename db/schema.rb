@@ -10,14 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_27_161655) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_01_004602) do
   create_table "banks", force: :cascade do |t|
     t.string "name", limit: 255, null: false
     t.string "address", limit: 255, null: false
-    t.integer "phone"
+    t.integer "phone", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_banks_on_name", unique: true
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "password_digest"
+    t.string "roll"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
 end
