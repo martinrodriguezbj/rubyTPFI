@@ -9,11 +9,10 @@ class SessionsController < ApplicationController
     def create
       #buscar usuario si el username es igual :login
         @user = User.find_by("username = :login OR username = :login", {login: params[:login]})
-        if @user&.authenticate(params[:password])
-            redirect_to @bank, notice: "login successful"
-            
+        if @user&.authenticate(params[:password_digest])
+          redirect_to banks_url, notice: "login successfully"            
         else
-
+          redirect_to banks_url, notice: "login failed"  
         end
       #@user = User.new(user_params)
   
