@@ -15,6 +15,8 @@ class Ability
     elsif user.has_role? :"Personal bancario"
       can :read, Bank
       can :read, User
+
+      can :edit, User
     elsif user.has_role? :Administrador
       can :manage, :all
     end
