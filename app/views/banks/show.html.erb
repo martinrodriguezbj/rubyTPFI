@@ -3,8 +3,10 @@
 <%= render @bank %>
 
 <div>
-  <%= link_to "Edit this bank", edit_bank_path(@bank) %> |
+  <% if can? :edit, @bank %>
+  <%= link_to "Edit this bank", edit_bank_path(@bank) %> <%end%>| 
   <%= link_to "Back to banks", banks_path %>
 
-  <%= button_to "Destroy this bank", @bank, method: :delete %>
+  <% if can? :edit, @bank %>
+  <%= button_to "Destroy this bank", @bank, method: :delete %> <%end%>
 </div>

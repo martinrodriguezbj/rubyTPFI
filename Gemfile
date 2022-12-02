@@ -45,6 +45,9 @@ gem "bootsnap", require: false
 # rolify for assigning users roles
 gem "rolify"
 
+#cancan for permissions
+gem "cancancan"
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

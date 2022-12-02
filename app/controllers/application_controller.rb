@@ -11,4 +11,9 @@ class ApplicationController < ActionController::Base
     def protect_pages
         redirect_to new_session_path, notice: "You must be logged in" unless Current.user
     end
+
+    # redefino current ability por que ability.new esperaba un Current_user y no un current.
+    def current_ability
+    @current_ability ||= Ability.new(Current.user)
+  end
 end
