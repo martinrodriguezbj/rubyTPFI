@@ -12,8 +12,3 @@
 </div>
 
 <%= link_to "New bank", new_bank_path %>
-
-<%= link_to ('logout'), session_path(Current.user.id), data: {
-  turbo_method: :delete,
-  turbo_confirm: ('are you sure?')
-} if Current.user %>
