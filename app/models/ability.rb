@@ -9,7 +9,6 @@ class Ability
     if user.has_role? :Cliente
       #permisos de leer y escribir en bank
       can :read, Bank
-      can :create, Bank
 
       can :edit, User
     elsif user.has_role? :"Personal bancario"
