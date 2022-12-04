@@ -2,9 +2,18 @@
 
 <%= render @bank %>
 
+
+<% @bank.turns.each do |turn| %>
+  <%= turn %>
+<% end %>
+
+#mostrar id de banco:
+<%= @bank.id %>
+
 <div>
   <% if can? :edit, @bank %>
   <%= link_to "Edit this bank", edit_bank_path(@bank) %> <%end%>| 
+  <%= link_to "Request turn", new_turn_path(:motivo => @bank.id) %> |
   <%= link_to "Back to banks", banks_path %>
 
   <% if can? :edit, @bank %>

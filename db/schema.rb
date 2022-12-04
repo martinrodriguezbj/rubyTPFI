@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_01_181000) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_03_000518) do
   create_table "banks", force: :cascade do |t|
     t.string "name", limit: 255, null: false
     t.string "address", limit: 255, null: false
@@ -31,6 +31,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_01_181000) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
   end
 
+  create_table "turns", force: :cascade do |t|
+    t.integer "bank_id", null: false
+    t.integer "user_id", null: false
+    t.string "day"
+    t.integer "hour"
+    t.string "reason", null: false
+    t.string "state", default: "Pendiente"
+    t.string "result"
+    t.string "bank_staff"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bank_id"], name: "index_turns_on_bank_id"
+    t.index ["user_id"], name: "index_turns_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
@@ -48,4 +63,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_01_181000) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "turns", "banks", on_delete: :cascade
+  add_foreign_key "turns", "users", on_delete: :cascade
 end
