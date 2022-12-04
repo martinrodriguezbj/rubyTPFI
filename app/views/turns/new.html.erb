@@ -1,4 +1,4 @@
-<%= @bank.name if @bank %>
+<h1>New turn for bank <%= @bank.name if @bank %></h1>
 
 <%= form_with(model: @turn) do |form| %>
   <% if @turn.errors.any? %>

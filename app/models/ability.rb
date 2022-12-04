@@ -11,11 +11,16 @@ class Ability
       can :read, Bank
 
       can :edit, User
+
+      #permitir acceso a profile
+      can :do_this, :on_this
     elsif user.has_role? :"Personal bancario"
       can :read, Bank
       can :read, User
 
       can :edit, User
+
+      can :do_this, :on_this
     elsif user.has_role? :Administrador
       can :manage, :all
     end
