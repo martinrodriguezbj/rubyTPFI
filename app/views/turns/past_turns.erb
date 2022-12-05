@@ -1,0 +1,12 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Pending turns</h1>
+
+<div id="turns">
+  <% @turns.each do |turn| %>
+    <%= render turn %>
+    <p>
+      <%= link_to "Show this turn", turn %>
+    </p>
+  <% end %>
+</div>

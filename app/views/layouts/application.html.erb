@@ -15,6 +15,10 @@
 
   <%= link_to "Clients", index_client_path %>
 
+  <%= link_to "Future turns", future_turns_path %>
+
+  <%= link_to "Past turns", past_turns_path %>
+
   <% if can? :show, @users_path %>
   <%= link_to "Users", users_path %>
   <%end%>

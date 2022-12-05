@@ -30,13 +30,23 @@ class TurnsController < ApplicationController
   
   # PATCH/PUT /turns/1
   def attended
-    #mensaje por consola
-    puts "entro a attended"
     @turn = Turn.find(params[:id])
     @turn.state = "attended"
     @turn.bank_staff = Current.user.id
     @turn.save
     redirect_to @turn
+  end
+
+  def past_turns
+    #mostrar los turnos del usuario actual y que esten en estado "pendendiente"
+    @user = Current.user
+    @turns = @user.turns.where(state: "attended")
+  end
+
+  def future_turns
+    #mostrar los turnos del usuario actual y que esten en estado "pendendiente"
+    @user = Current.user
+    @turns = @user.turns.where(state: "Pendiente")
   end
 
   # POST /turns
