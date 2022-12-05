@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :users
   get '/index_client', to: 'users#index_client', as: 'index_client'
   resources :banks
+  patch '/schedules/:id/updateSchedule', to: 'schedules#updateSchedule'
+  get 'schedules/:id/editSchedule', to: 'schedules#editSchedule', as: 'editSchedule_schedule'
   resources :sessions
   get '/profiles', to: 'profiles#show'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

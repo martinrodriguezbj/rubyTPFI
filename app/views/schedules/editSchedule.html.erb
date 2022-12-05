@@ -1,0 +1,33 @@
+<h1> Edit schedule </h1>
+
+<%= form_with(model: @schedule, :url => {:action => 'updateSchedule'}) do |form| %>
+    <% if @schedule.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(@schedule.errors.count, "error") %> prohibited this schedule from being saved:</h2>
+  
+        <ul>
+          <% @schedule.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+    <%= form.label :day, style: "display: block" %>
+    <%= form.text_field :day, disabled: true %>
+   </div>
+
+    <div>
+    <%= form.label :startAttention, style: "display: block" %>
+    <%= form.text_field :startAttention %>
+    </div>
+
+    <div>
+    <%= form.label :endAttention, style: "display: block" %>
+    <%= form.text_field :endAttention %>
+    </div>
+
+    <div>
+    <%= form.submit %>
+<% end %>

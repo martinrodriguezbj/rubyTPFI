@@ -1,10 +1,40 @@
 <h1>Editing bank</h1>
 
-<%= render "form", bank: @bank %>
+<%= form_with(model: @bank) do |form| %>
+  <% if @bank.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@bank.errors.count, "error") %> prohibited this bank from being saved:</h2>
 
-<br>
+      <ul>
+        <% @bank.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<div>
-  <%= link_to "Show this bank", @bank %> |
-  <%= link_to "Back to banks", banks_path %>
-</div>
+  <%= Current.user.inspect %>
+  Are you admin? <%= Current.user.has_role? :Administrador %>
+  #mostrar todos los roles del usuario
+  
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :address, style: "display: block" %>
+    <%= form.text_field :address %>
+  </div>
+
+  <div>
+    <%= form.label :phone, style: "display: block" %>
+    <%= form.number_field :phone %>
+  </div>
+
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
