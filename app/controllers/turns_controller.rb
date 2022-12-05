@@ -51,21 +51,43 @@ class TurnsController < ApplicationController
 
   # POST /turns
   def create
+    #obtener el parametro del dia
+    @day = params[:turn][:day]
+    #obtener que nombre de dia es @day
+    @day_name = Date.parse(@day).strftime("%A")
+    #imprimir en consola el nombre del dia de hoy es @day_name
+    puts "el nombre del dia de hoy es #{@day_name}"
     @turn = Turn.new(turn_params)
     @turn.user_id = Current.user.id
     #recibir id de banco pasado por hidden_field
     @idbank = params[:turn][:bank_id]
+    #obtengo el banco con el id recibido
+    @bank = Bank.find(@idbank)
+    #filtrar el hoario cuyo dia sea igual a @day_name
+    @schedule = @bank.schedules.where(day: @day_name)
+    #obtener el horario del turno recibido
+    @hour = params[:turn][:hour].to_i
+    #verificar si el horario del turno recibido esta dentro del horario de atencion de @schedule
+    #obtener startAttention y endAttention de @schedule
+    @startAttention = @schedule.where(day: @day_name).first.startAttention.to_i
+    @endAttention = @schedule.where(day: @day_name).first.endAttention.to_i
+    puts "COMIENZO DE ATENCION DEL MARTES ES #{@startAttention}"
+    puts "FIN DE ATENCION DEL MARTES ES #{@endAttention}"
+    puts "HORA DEL TURNO ES #{@hour}"
+    estaEntre = (@startAttention..@endAttention).include?(@hour)
+    puts "VALOR DE ESTAENTRE ES #{estaEntre}"
     @turn.bank_id = @idbank
     #poner state del turno en "sin atender"
-    if @turn.save
+    if estaEntre and @turn.save
       redirect_to @turn, notice: "Turn was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      redirect_to new_turn_path(motivo: @idbank), notice: "Turn was not created because the hour is not between the attention hours of the bank"
     end
   end
 
   # PATCH/PUT /turns/1
   def update
+    
     if @turn.update(turn_params)
       @turn.state = "not attended"
       @turn.save

@@ -26,11 +26,11 @@ class BanksController < ApplicationController
   def create
     @bank = Bank.new(bank_params)
     #instanciar horarios de atencion de 9 a 12 de luenes a viernes y agregarlos al banco
-    @schedule1 = Schedule.new(day: "Lunes", startAttention: nil, endAttention: nil)
-    @schedule2 = Schedule.new(day: "Martes", startAttention: nil, endAttention: nil)
-    @schedule3 = Schedule.new(day: "Miercoles", startAttention: nil, endAttention: nil)
-    @schedule4 = Schedule.new(day: "Jueves", startAttention: nil, endAttention: nil)
-    @schedule5 = Schedule.new(day: "Viernes", startAttention: nil, endAttention: nil)
+    @schedule1 = Schedule.new(day: "Monday", startAttention: nil, endAttention: nil)
+    @schedule2 = Schedule.new(day: "Tuesday", startAttention: nil, endAttention: nil)
+    @schedule3 = Schedule.new(day: "Wednesday", startAttention: nil, endAttention: nil)
+    @schedule4 = Schedule.new(day: "Thursday", startAttention: nil, endAttention: nil)
+    @schedule5 = Schedule.new(day: "Friday", startAttention: nil, endAttention: nil)
     #guardaer todos los schedules en el banco
     @bank.schedules << @schedule1
     @bank.schedules << @schedule2
