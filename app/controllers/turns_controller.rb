@@ -1,5 +1,5 @@
 class TurnsController < ApplicationController
-  before_action :set_turn, only: %i[ show edit update destroy ]
+  before_action :set_turn, only: %i[ show edit update destroy attend]
 
   # GET /turns
   def index
@@ -23,6 +23,22 @@ class TurnsController < ApplicationController
   def edit
   end
 
+  #GET /turns/1/attend
+  def attend
+    @turn =  Turn.find(params[:id])
+  end
+  
+  # PATCH/PUT /turns/1
+  def attended
+    #mensaje por consola
+    puts "entro a attended"
+    @turn = Turn.find(params[:id])
+    @turn.state = "attended"
+    @turn.bank_staff = Current.user.id
+    @turn.save
+    redirect_to @turn
+  end
+
   # POST /turns
   def create
     @turn = Turn.new(turn_params)
@@ -30,6 +46,7 @@ class TurnsController < ApplicationController
     #recibir id de banco pasado por hidden_field
     @idbank = params[:turn][:bank_id]
     @turn.bank_id = @idbank
+    #poner state del turno en "sin atender"
     if @turn.save
       redirect_to @turn, notice: "Turn was successfully created."
     else
@@ -40,6 +57,8 @@ class TurnsController < ApplicationController
   # PATCH/PUT /turns/1
   def update
     if @turn.update(turn_params)
+      @turn.state = "not attended"
+      @turn.save
       redirect_to @turn, notice: "Turn was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -51,6 +70,7 @@ class TurnsController < ApplicationController
     @turn.destroy
     redirect_to turns_url, notice: "Turn was successfully destroyed."
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

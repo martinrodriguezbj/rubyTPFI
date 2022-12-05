@@ -7,6 +7,11 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  #muestro solo los clientes
+  def index_client
+    @users = User.where(roll: "Cliente")
+  end
+
   # GET /users/1
   def show
   end

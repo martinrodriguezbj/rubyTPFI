@@ -4,7 +4,10 @@
 
 
 <% @bank.turns.each do |turn| %>
-  <%= turn %>
+  <div>
+  <%= turn %> |
+  <%= link_to "Show this turn", turn %>
+  </div>
 <% end %>
 
 #mostrar id de banco:
