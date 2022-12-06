@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get 'schedules/:id/editSchedule', to: 'schedules#editSchedule', as: 'editSchedule_schedule'
   resources :sessions
   get '/profiles', to: 'profiles#show'
+  get '/profiles/edit', to: 'profiles#edit', as: 'edit_profile'
+  patch '/profiles', to: 'profiles#update'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

@@ -4,23 +4,25 @@ class TurnsController < ApplicationController
   skip_authorize_resource
   # GET /turns
   def index
+    authorize! :read, :index
     @turns = Turn.all
   end
 
   # GET /turns/1
   def show
+    authorize! :read, :show
     #obtener banco
     @bank = Bank.find(@turn.bank_id)
   end
 
   # GET /turns/new
   def new
+    authorize! :create, :Turn
     @turn = Turn.new
     #obtener primer banco
     #@bank = Bank.first
     @motivo_recibido = params[:motivo]
     @bank = Bank.find(@motivo_recibido)
-    authorize! :create, :Turn
   end
 
   # GET /turns/1/edit
@@ -30,6 +32,7 @@ class TurnsController < ApplicationController
 
   #GET /turns/1/attend
   def attend
+    authorize! :update, :attend
     @turn =  Turn.find(params[:id])
   end
   
@@ -104,6 +107,7 @@ class TurnsController < ApplicationController
 
   # DELETE /turns/1
   def destroy
+    authorize! :delete, :destroy
     if @turn.state != "Pendiente"
       @turn.destroy
       redirect_to turns_url, notice: "Turn was successfully destroyed."

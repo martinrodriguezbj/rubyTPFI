@@ -10,11 +10,10 @@ class Ability
       #permisos de leer en bank
       can :read, Bank
 
-      can :edit, User
+      can :edit, :User
 
       #permitir acceso a profile
-      can :do_this, :on_this
-
+      can :read, :show
       #permitir crear nuevo turno
       can :create, :Turn
       #permitir editar sus turnos
@@ -22,13 +21,20 @@ class Ability
       #permitir ver sus turnos
       can :read, :past_turns
       can :read, :future_turns
+      #permitir eliminar sus turnos
+      can :delete, :destroy
     elsif user.has_role? :"Personal bancario"
       can :read, Bank
       can :read, User
 
       can :edit, User
 
-      can :do_this, :on_this
+      can :read, :show
+      #permitirle ver index_client
+      can :read, :index_client
+
+      #permitirle atender turno
+      can :update, :attend
     elsif user.has_role? :Administrador
       can :manage, :all
     end

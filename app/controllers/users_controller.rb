@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   load_and_authorize_resource
   before_action :set_user, only: %i[ show edit update destroy ]
+  skip_authorize_resource
 
   # GET /users
   def index
@@ -9,20 +10,24 @@ class UsersController < ApplicationController
 
   #muestro solo los clientes
   def index_client
+    authorize! :read, :index_client
     @users = User.where(roll: "Cliente")
   end
 
   # GET /users/1
   def show
+    authorize! :read, :User
   end
 
   # GET /users/new
   def new
+    authorize! :create, :User
     @user = User.new
   end
 
   # GET /users/1/edit
   def edit
+    authorize! :edit, :User
   end
 
   # POST /users
@@ -48,6 +53,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
+    authorize! :delete, :User
     @user.destroy
     redirect_to users_url, notice: "User was successfully destroyed."
   end
