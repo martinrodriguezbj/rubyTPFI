@@ -7,7 +7,7 @@ class Ability
     user ||= User.new
 
     if user.has_role? :Cliente
-      #permisos de leer y escribir en bank
+      #permisos de leer en bank
       can :read, Bank
 
       can :edit, User

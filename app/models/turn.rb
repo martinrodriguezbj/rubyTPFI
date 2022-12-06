@@ -5,6 +5,6 @@ class Turn < ApplicationRecord
   validates :day, :hour, :reason, presence: true
 
   def to_s
-    "#{day} | #{hour} | #{reason}"
+    "Bank: #{bank.name} | Day: #{day} |Hour: #{hour} |Reason: #{reason} |State: #{state}"
   end
 end

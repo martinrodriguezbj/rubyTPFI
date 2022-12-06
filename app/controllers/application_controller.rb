@@ -15,5 +15,10 @@ class ApplicationController < ActionController::Base
     # redefino current ability por que ability.new esperaba un Current_user y no un current.
     def current_ability
     @current_ability ||= Ability.new(Current.user)
-  end
+    end
+
+    #redefino excepcion de cancan
+    rescue_from CanCan::AccessDenied do |exception|
+        redirect_to banks_url, :alert => exception.message
+    end
 end

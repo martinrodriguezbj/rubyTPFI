@@ -4,4 +4,8 @@ class User < ApplicationRecord
     has_many :turns
     
     validates :username, :password_digest, presence: true, length: { maximum: 255 }
+
+  def to_s
+    string="Nombre de usuario: #{username}"
+  end
 end

@@ -8,6 +8,8 @@ class TurnsController < ApplicationController
 
   # GET /turns/1
   def show
+    #obtener banco
+    @bank = Bank.find(@turn.bank_id)
   end
 
   # GET /turns/new

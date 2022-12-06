@@ -13,11 +13,6 @@
     </div>
   <% end %>
 
-  <%= Current.user.inspect %>
-  Are you admin? <%= Current.user.has_role? :Administrador %>
-  #mostrar todos los roles del usuario
-  
-
   <div>
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name %>
@@ -32,6 +27,13 @@
     <%= form.label :phone, style: "display: block" %>
     <%= form.number_field :phone %>
   </div>
+
+<h3>Schedules</h3>
+<% @bank.schedules.each do |schedule| %> 
+  <div>
+  <%= schedule.day %> | <%= schedule.startAttention %> | <%= schedule.endAttention %> | <%= link_to "Edit this schedule", editSchedule_schedule_path(schedule.id) %>
+  </div>
+<% end %>
 
 
   <div>
