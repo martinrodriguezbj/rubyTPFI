@@ -1,6 +1,7 @@
 class TurnsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_turn, only: %i[ show edit update destroy attend]
-
+  skip_authorize_resource
   # GET /turns
   def index
     @turns = Turn.all
@@ -19,10 +20,12 @@ class TurnsController < ApplicationController
     #@bank = Bank.first
     @motivo_recibido = params[:motivo]
     @bank = Bank.find(@motivo_recibido)
+    authorize! :create, :Turn
   end
 
   # GET /turns/1/edit
   def edit
+    authorize! :edit, :edit
   end
 
   #GET /turns/1/attend
@@ -43,12 +46,14 @@ class TurnsController < ApplicationController
     #mostrar los turnos del usuario actua si dia es menor a hoy
     @user = Current.user
     @turns = @user.turns.where("day < ?", Date.today)
+    authorize! :read, :past_turns
   end
 
   def future_turns
     #mostrar los turnos del usuario actua si dia es mayor o igual a hoy
     @user = Current.user
     @turns = @user.turns.where("day >= ?", Date.today)
+    authorize! :read, :future_turns
   end
 
   # POST /turns
@@ -91,8 +96,6 @@ class TurnsController < ApplicationController
   def update
     
     if @turn.update(turn_params)
-      @turn.state = "not attended"
-      @turn.save
       redirect_to @turn, notice: "Turn was successfully updated."
     else
       render :edit, status: :unprocessable_entity

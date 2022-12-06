@@ -14,6 +14,14 @@ class Ability
 
       #permitir acceso a profile
       can :do_this, :on_this
+
+      #permitir crear nuevo turno
+      can :create, :Turn
+      #permitir editar sus turnos
+      can :edit, :edit
+      #permitir ver sus turnos
+      can :read, :past_turns
+      can :read, :future_turns
     elsif user.has_role? :"Personal bancario"
       can :read, Bank
       can :read, User
