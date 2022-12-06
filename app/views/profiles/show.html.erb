@@ -1,5 +1,8 @@
-<%= render @user %>
+<h1>Nombre: <%= @user.username %> </h1>
+
+<h3>Rol: <%= @user.roll %> </h3>
+
 
 <div>
-  <%= link_to "Edit", edit_user_path(@user) %>
+  <%= link_to "Edit profile", edit_user_path(@user) %>
 </div>

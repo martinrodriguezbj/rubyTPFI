@@ -38,15 +38,15 @@ class TurnsController < ApplicationController
   end
 
   def past_turns
-    #mostrar los turnos del usuario actual y que esten en estado "pendendiente"
+    #mostrar los turnos del usuario actua si dia es menor a hoy
     @user = Current.user
-    @turns = @user.turns.where(state: "attended")
+    @turns = @user.turns.where("day < ?", Date.today)
   end
 
   def future_turns
-    #mostrar los turnos del usuario actual y que esten en estado "pendendiente"
+    #mostrar los turnos del usuario actua si dia es mayor o igual a hoy
     @user = Current.user
-    @turns = @user.turns.where(state: "Pendiente")
+    @turns = @user.turns.where("day >= ?", Date.today)
   end
 
   # POST /turns
@@ -99,8 +99,12 @@ class TurnsController < ApplicationController
 
   # DELETE /turns/1
   def destroy
-    @turn.destroy
-    redirect_to turns_url, notice: "Turn was successfully destroyed."
+    if @turn.state != "Pendiente"
+      @turn.destroy
+      redirect_to turns_url, notice: "Turn was successfully destroyed."
+    else
+      redirect_to turns_url, notice: "Turn was not destroyed because it is pending"
+    end
   end
 
 

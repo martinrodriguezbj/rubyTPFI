@@ -4,6 +4,7 @@
 
 <div>
   <%= link_to "Attend this turn", attend_turn_path(@turn) %> |
+  <%= link_to "Edit this turn", edit_turn_path(@turn) %> |
   <%= link_to "Back to turns", turns_path %>
 
   <%= button_to "Destroy this turn", @turn, method: :delete %>
