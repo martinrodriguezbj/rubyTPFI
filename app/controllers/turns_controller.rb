@@ -76,7 +76,9 @@ class TurnsController < ApplicationController
     #filtrar el hoario cuyo dia sea igual a @day_name
     @schedule = @bank.schedules.where(day: @day_name)
     #obtener el horario del turno recibido
-    @hour = params[:turn][:hour].to_i
+    @hour = params[:turn][:hour]
+    #obtener los dos primeros caracteres de @hour
+    @hour = @hour[0..1].to_i
     #verificar si el horario del turno recibido esta dentro del horario de atencion de @schedule
     #obtener startAttention y endAttention de @schedule
     @startAttention = @schedule.where(day: @day_name).first.startAttention.to_i
@@ -85,10 +87,12 @@ class TurnsController < ApplicationController
     puts "FIN DE ATENCION DEL MARTES ES #{@endAttention}"
     puts "HORA DEL TURNO ES #{@hour}"
     estaEntre = (@startAttention..@endAttention).include?(@hour)
+    #chequear si el banco ya tiene un turno para ese dia y hora
+    ocupado = @bank.turns.where(day: @day, hour: @hour).exists?
     puts "VALOR DE ESTAENTRE ES #{estaEntre}"
     @turn.bank_id = @idbank
     #poner state del turno en "sin atender"
-    if estaEntre and @turn.save
+    if !ocupado and estaEntre and @turn.save
       redirect_to @turn, notice: "Turn was successfully created."
     else
       redirect_to new_turn_path(motivo: @idbank), notice: "Turn was not created because the hour is not between the attention hours of the bank"
