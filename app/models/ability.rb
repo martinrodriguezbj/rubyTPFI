@@ -35,6 +35,9 @@ class Ability
 
       #permitirle atender turno
       can :update, :attend
+
+      #permitirle ver turnos
+      can :read, :index
     elsif user.has_role? :Administrador
       can :manage, :all
     end

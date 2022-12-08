@@ -5,7 +5,14 @@ class TurnsController < ApplicationController
   # GET /turns
   def index
     authorize! :read, :index
-    @turns = Turn.all
+    @motivo_recibido = params[:motivo]
+    #consultar si el @motivo recibido es igual a el bank del usuario
+    @bank = Bank.find(@motivo_recibido)
+    if @motivo_recibido.to_i == Current.user.bank_id.to_i
+      @turns = @bank.turns
+    else
+      redirect_to @bank
+    end
   end
 
   # GET /turns/1

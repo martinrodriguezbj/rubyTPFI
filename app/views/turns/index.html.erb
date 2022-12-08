@@ -1,14 +1,11 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Turns</h1>
+<h1>Turns of bank <%= @bank.name %></h1>
 
-<div id="turns">
-  <% @turns.each do |turn| %>
-    <%= render turn %>
-    <p>
-      <%= link_to "Show this turn", turn %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New turn", new_turn_path %>
+Fecha       Hora  Motivo
+<% @bank.turns.each do |turn| %>
+  <div>
+  <%= turn %> |
+  <%= link_to "Show this turn", turn %>
+  </div>
+<% end %>

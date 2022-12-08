@@ -25,7 +25,12 @@
     <%= form.label :roll, style: "display: block" %>
     <%= form.select :roll, options_for_select([["Administrador", "Administrador"], ["Personal bancario", "Personal bancario"], ["Cliente", "Cliente"]]) %>
   </div>
-
+  
+  <div>
+    <%= form.label :bank_id, style: "display: block" %>
+    <%= form.select :bank_id, options_from_collection_for_select(Bank.all, :id, :name) %>
+  </div>
+  
   <div>
     <%= form.submit %>
   </div>

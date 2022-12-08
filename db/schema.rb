@@ -44,8 +44,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_131431) do
   create_table "turns", force: :cascade do |t|
     t.integer "bank_id", null: false
     t.integer "user_id", null: false
-    t.string "day"
-    t.integer "hour"
+    t.date "day"
+    t.string "hour"
     t.string "reason", null: false
     t.string "state", default: "Pendiente"
     t.string "result"
@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_131431) do
     t.string "username"
     t.string "password_digest"
     t.string "roll"
+    t.integer "bank_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["username"], name: "index_users_on_username", unique: true

@@ -3,6 +3,23 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
   skip_authorize_resource
 
+  def newCliente
+    @user = User.new
+    print("ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+  end
+
+  def createCliente
+    print("VOLVIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+    @user = User.new(user_params)
+    @user.add_role("Cliente")
+    if @user.save
+      redirect_to @user, notice: "User was successfully created."
+    else
+      render :newCliente, status: :unprocessable_entity
+    end
+  end
+
+
   # GET /users
   def index
     @users = User.all
@@ -33,6 +50,10 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
+    #asignar el id del banco al usuario
+    #obtener el id del banco por parametro
+    bank_id = params[:user][:bank_id]
+    @user.bank_id = bank_id
     #agregar el rol al usuario
     @user.add_role(user_params[:roll])
     if @user.save

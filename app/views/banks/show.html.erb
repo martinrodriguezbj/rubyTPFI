@@ -2,15 +2,8 @@
 
 <%= render @bank %>
 
-Fecha       Hora  Motivo
-<% @bank.turns.each do |turn| %>
-  <div>
-  <%= turn %> |
-  <%= link_to "Show this turn", turn %>
-  </div>
-<% end %>
-
 <div>
+  <%= link_to "Show turns for this bank", turns_path(:motivo => @bank.id) %>
   <% if can? :edit, @bank %>
   <%= link_to "Edit this bank", edit_bank_path(@bank) %> <%end%>| 
   <%= link_to "Request turn", new_turn_path(:motivo => @bank.id) %> |
