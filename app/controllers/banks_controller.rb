@@ -55,8 +55,13 @@ class BanksController < ApplicationController
 
   # DELETE /banks/1
   def destroy
-    @bank.destroy
-    redirect_to banks_url, notice: "Bank was successfully destroyed."
+    #borrar solo si el banco no tiene turnos en state "pending"
+    if @bank.turns.where(state: "Pendiente").empty?
+      @bank.destroy
+      redirect_to banks_url, notice: "Bank was successfully destroyed."
+    else
+      redirect_to banks_url, notice: "Bank can't be destroyed because it has pending turns."
+    end
   end
 
   private

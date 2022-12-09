@@ -30,10 +30,15 @@
 
 <h3>Schedules</h3>
 <% @bank.schedules.each do |schedule| %> 
-  <div>
-  <%= schedule.day %> | <%= schedule.startAttention %> | <%= schedule.endAttention %> | <%= link_to "Edit this schedule", editSchedule_schedule_path(schedule.id) %>
-  </div>
+<div>
+<%if schedule.startAttention && schedule.endAttention%>
+<%= schedule.day %> |<%= schedule.startAttention %> a <%= schedule.endAttention %>hs| <%= link_to "Edit this schedule", editSchedule_schedule_path(schedule.id) %>
+<%else%>
+<%= schedule.day %> |no atiende| <%= link_to "Edit this schedule", editSchedule_schedule_path(schedule.id) %>
 <% end %>
+<% end %>
+</div>
+
 
 
   <div>

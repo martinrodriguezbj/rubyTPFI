@@ -2,18 +2,19 @@ class UsersController < ApplicationController
   load_and_authorize_resource
   before_action :set_user, only: %i[ show edit update destroy ]
   skip_authorize_resource
+  skip_before_action :protect_pages , only: [:newCliente, :createCliente]
 
   def newCliente
     @user = User.new
-    print("ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
   end
 
   def createCliente
-    print("VOLVIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
-    @user = User.new(user_params)
+    @user = User.new(cliente_params)
+    @user.roll = "Cliente"
     @user.add_role("Cliente")
     if @user.save
-      redirect_to @user, notice: "User was successfully created."
+      #redireccionar a session new
+      redirect_to new_session_path, notice: "User was successfully created."
     else
       render :newCliente, status: :unprocessable_entity
     end
@@ -89,5 +90,9 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:username, :password, :roll)
+    end
+
+    def cliente_params
+      params.require(:user).permit(:username, :password)
     end
 end

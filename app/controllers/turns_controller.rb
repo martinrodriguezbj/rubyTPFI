@@ -2,6 +2,7 @@ class TurnsController < ApplicationController
   load_and_authorize_resource
   before_action :set_turn, only: %i[ show edit update destroy attend]
   skip_authorize_resource
+ 
   # GET /turns
   def index
     authorize! :read, :index

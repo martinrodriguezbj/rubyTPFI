@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   #ruta donde una persona puede registrarse
   get '/signup', to: 'users#newCliente', as: 'signup'
-  patch '/signup', to: 'users#createCliente'
+  post '/signup', to: 'users#createCliente'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

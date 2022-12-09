@@ -6,7 +6,7 @@ class CreateTurns < ActiveRecord::Migration[7.0]
       t.date :day 
       t.string :hour
       t.string :reason, null: false
-      t.string :state , default: "Pendiente"
+      t.string :state , default: "pending"
       t.string :result
       t.string :bank_staff
 

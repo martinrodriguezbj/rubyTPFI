@@ -2,6 +2,17 @@
 
 <%= render @bank %>
 
+<h3>Schedules</h3>
+<% @bank.schedules.each do |schedule| %> 
+<div>
+<%if schedule.startAttention && schedule.endAttention%>
+<%= schedule.day %> <%= schedule.startAttention %> a <%= schedule.endAttention %>hs
+<%else%>
+<%= schedule.day %> |no atiende|
+<% end %>
+<% end %>
+</div>
+
 <div>
   <%= link_to "Show turns for this bank", turns_path(:motivo => @bank.id) %>
   <% if can? :edit, @bank %>
