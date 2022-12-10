@@ -42,15 +42,26 @@ class TurnsController < ApplicationController
   def attend
     authorize! :update, :attend
     @turn =  Turn.find(params[:id])
+    #seguir solo si el turno no es "attended"
+    if @turn.state == "attended"
+      redirect_to @turn, alert: "Turn was not attended because it was already attended"
+    end
   end
   
   # PATCH/PUT /turns/1
   def attended
-    @turn = Turn.find(params[:id])
-    @turn.state = "attended"
-    @turn.bank_staff = Current.user.id
-    @turn.save
-    redirect_to @turn
+    #recibir el result de turno por parametro
+    @result = params[:turn][:result]
+    if @result == ""
+      redirect_to attend_turn_path(@turn), alert: "Turn was not attended because the result is empty"
+    else
+      @turn = Turn.find(params[:id])
+      @turn.state = "attended"
+      @turn.result = @result
+      @turn.bank_staff = Current.user.id
+      @turn.save
+      redirect_to @turn, notice: "Turn was successfully attended."
+    end
   end
 
   def past_turns
