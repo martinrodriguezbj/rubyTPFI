@@ -44,10 +44,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_131431) do
   create_table "turns", force: :cascade do |t|
     t.integer "bank_id", null: false
     t.integer "user_id", null: false
-    t.date "day"
-    t.string "hour"
+    t.date "day", null: false
+    t.string "hour", null: false
     t.string "reason", null: false
-    t.string "state", default: "Pendiente"
+    t.string "state", default: "pending"
     t.string "result"
     t.string "bank_staff"
     t.datetime "created_at", null: false

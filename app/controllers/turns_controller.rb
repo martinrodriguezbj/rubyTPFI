@@ -47,7 +47,7 @@ class TurnsController < ApplicationController
       raise ActionController::RoutingError.new('Not Found')
     end
     #solo se puede editar el turno si el estado es "Pendiente"
-    if @turn.state != "Pendiente"
+    if @turn.state != "pending"
       redirect_to @turn, alert: "Turn was not edited because it was already attended"
     end
   end
@@ -111,6 +111,7 @@ class TurnsController < ApplicationController
     #obtener el horario del turno recibido
     @hour = params[:turn][:hour]
     #obtener los dos primeros caracteres de @hour
+    @hour2 = @hour
     @hour = @hour[0..1].to_i
     #verificar si el horario del turno recibido esta dentro del horario de atencion de @schedule
     #obtener startAttention y endAttention de @schedule
@@ -121,15 +122,18 @@ class TurnsController < ApplicationController
     puts "HORA DEL TURNO ES #{@hour}"
     estaEntre = (@startAttention..@endAttention).include?(@hour)
     #chequear si el banco ya tiene un turno para ese dia y hora
-    ocupado = @bank.turns.where(day: @day, hour: @hour).exists?
+    ocupado = @bank.turns.where(day: @day, hour: @hour2).exists?
+    puts("El resultado de ocupado es : #{ocupado}")
     puts "VALOR DE ESTAENTRE ES #{estaEntre}"
     @turn.bank_id = @idbank
     #poner state del turno en "sin atender"
-    if !ocupado and estaEntre and @turn.save
-      redirect_to @turn, notice: "Turn was successfully created."
-    else
+    if ocupado
+      redirect_to new_turn_path(motivo: @idbank), alert: "Turn was not created because the hour is already taken"
+    elsif !estaEntre
       redirect_to new_turn_path(motivo: @idbank), alert: "Turn was not created because the hour is not between the attention hours of the bank"
-    end
+    elsif @turn.save
+      redirect_to @turn, notice: "Turn was successfully created."
+  end
   end
 
   # PATCH/PUT /turns/1
