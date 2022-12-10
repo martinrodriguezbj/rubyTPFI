@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :localities
   resources :turns
   patch '/turns/:id/attended', to: 'turns#attended'
   get 'turns/:id/attend', to: 'turns#attend', as: 'attend_turn'

@@ -4,6 +4,7 @@ class CreateBanks < ActiveRecord::Migration[7.0]
       t.string :name, null: false, limit: 255
       t.string :address, null: false, limit: 255
       t.integer :phone, null: false
+      t.integer :locality_id, null: false
 
       t.timestamps
     end

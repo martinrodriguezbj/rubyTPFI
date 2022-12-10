@@ -1,5 +1,7 @@
 <%= render @bank %>
 
+Localidad: <%= @bank.locality.locality %>, <%= @bank.locality.province %>
+
 <h3>Schedules</h3>
 <% @bank.schedules.each do |schedule| %> 
 <div>

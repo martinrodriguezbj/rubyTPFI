@@ -31,6 +31,12 @@
     <%= form.number_field :phone %>
   </div>
 
+  #se debe seleccionar una localidad
+  <div>
+    <%= form.label :locality_id, style: "display: block" %>
+    <%= form.select :locality_id, options_from_collection_for_select(Locality.all, :id, :locality) %>
+  </div>
+
   <div>
     <%= form.submit %>
   </div>

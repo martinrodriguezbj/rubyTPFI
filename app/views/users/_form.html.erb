@@ -26,10 +26,16 @@
     <%= form.select :roll, options_for_select([["Administrador", "Administrador"], ["Personal bancario", "Personal bancario"], ["Cliente", "Cliente"]]) %>
   </div>
   
-  <div>
+  <div id="bank_id" style="display: none">
     <%= form.label :bank_id, style: "display: block" %>
     <%= form.select :bank_id, options_from_collection_for_select(Bank.all, :id, :name) %>
   </div>
+
+  <script>
+    function showHide() {
+      document.getElementById("bank_id").style.display = "block";
+    }
+  </script>
   
   <div>
     <%= form.submit %>
