@@ -114,7 +114,7 @@ class TurnsController < ApplicationController
     if !ocupado and estaEntre and @turn.save
       redirect_to @turn, notice: "Turn was successfully created."
     else
-      redirect_to new_turn_path(motivo: @idbank), notice: "Turn was not created because the hour is not between the attention hours of the bank"
+      redirect_to new_turn_path(motivo: @idbank), alert: "Turn was not created because the hour is not between the attention hours of the bank"
     end
   end
 
