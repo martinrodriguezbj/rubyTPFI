@@ -19,6 +19,11 @@ class TurnsController < ApplicationController
   # GET /turns/1
   def show
     authorize! :read, :show
+    #consultar si el turno le pertenece al cliente o es del banco del personal bancario
+    if @turn.user_id != Current.user.id && @turn.bank_id != Current.user.bank_id
+      #levantar excepcion RoutingError
+      raise ActionController::RoutingError.new('Not Found')
+    end
     #obtener banco
     @bank = Bank.find(@turn.bank_id)
   end
@@ -36,6 +41,15 @@ class TurnsController < ApplicationController
   # GET /turns/1/edit
   def edit
     authorize! :edit, :edit
+    #consultar si el turno le pertenece al cliente o es del banco del personal bancario
+    if @turn.user_id != Current.user.id
+      #levantar excepcion RoutingError
+      raise ActionController::RoutingError.new('Not Found')
+    end
+    #solo se puede editar el turno si el estado es "Pendiente"
+    if @turn.state != "Pendiente"
+      redirect_to @turn, alert: "Turn was not edited because it was already attended"
+    end
   end
 
   #GET /turns/1/attend

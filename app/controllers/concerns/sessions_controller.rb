@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
           session[:user_id] = @user.id
           redirect_to banks_url, notice: "login successfully"            
         else
-          redirect_to banks_url, notice: "login failed"  
+          redirect_to banks_url, alert: "login failed"  
         end
     end
 

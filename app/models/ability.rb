@@ -23,7 +23,7 @@ class Ability
       can :delete, :destroy
     elsif user.has_role? :"Personal bancario"
       can :read, Bank
-      can :read, :User
+      can :read, User
 
       can :edit, User
 
