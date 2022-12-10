@@ -10,8 +10,6 @@ class Ability
       #permisos de leer en bank
       can :read, Bank
 
-      can :edit, :User
-
       #permitir acceso a profile
       can :read, :show
       #permitir crear nuevo turno
@@ -25,7 +23,7 @@ class Ability
       can :delete, :destroy
     elsif user.has_role? :"Personal bancario"
       can :read, Bank
-      can :read, User
+      can :read, :User
 
       can :edit, User
 
