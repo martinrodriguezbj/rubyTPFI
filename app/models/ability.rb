@@ -37,7 +37,12 @@ class Ability
       #permitirle ver turnos
       can :read, :index
     elsif user.has_role? :Administrador
-      can :manage, :all
+      can :manage, Bank
+      can :manage, User
+      can :read, :show
+      can :manage, Locality
+      can :edit, :editSchedule
+      can :update, :updateSchedule
     end
 
     # Define abilities for the user here. For example:

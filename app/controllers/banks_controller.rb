@@ -1,7 +1,6 @@
 class BanksController < ApplicationController
   load_and_authorize_resource
   before_action :set_bank, only: %i[ show edit update destroy ]
-  skip_before_action :protect_pages, only: [:index, :show]
 
 
   # GET /banks

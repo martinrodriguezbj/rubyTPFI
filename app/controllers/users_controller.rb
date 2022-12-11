@@ -5,6 +5,10 @@ class UsersController < ApplicationController
   skip_before_action :protect_pages , only: [:newCliente, :createCliente]
 
   def newCliente
+    #solo si el usuario no esta logueado, sino levantar errro 404
+    if Current.user
+      raise ActionController::RoutingError.new('Not Found')
+    end
     @user = User.new
   end
 
@@ -96,6 +100,6 @@ class UsersController < ApplicationController
     end
 
     def cliente_params
-      params.require(:user).permit(:username, :password)
+      params.require(:user).permit(:username, :password, :name, :surname, :address, :email)
     end
 end

@@ -5,6 +5,10 @@ class SessionsController < ApplicationController
     
     # GET /users/new
     def new
+      #solo si el usuario no esta logueado, sino levantar errro 404
+      if Current.user
+        raise ActionController::RoutingError.new('Not Found')
+      end
     end
   
     # POST /users
