@@ -20,7 +20,7 @@ class Ability
       can :read, :past_turns
       can :read, :future_turns
       #permitir eliminar sus turnos
-      can :delete, :destroy
+      can :delete, :destroyTurn
     elsif user.has_role? :"Personal bancario"
       can :read, Bank
       can :read, User

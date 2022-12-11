@@ -26,7 +26,8 @@ class Turn < ApplicationRecord
       @startAttention = @startAttention.to_s.gsub(":", "").to_i
       @endAttention = @endAttention.to_s.gsub(":", "").to_i
       estaEntre = (@startAttention..@endAttention).include?(@hour)
-      ocupado = @bank.turns.where(day: day, hour: hour).exists?
+      #chequear si el turno ya se encuentra ocupado, y si ese turno no es el actual
+      ocupado = @bank.turns.where(day: day, hour: hour).exists? && @bank.turns.where(day: day, hour: hour).first.id != id
       if !estaEntre
         errors.add(:day, "is not valid, the bank is not open at that time")
       elsif ocupado

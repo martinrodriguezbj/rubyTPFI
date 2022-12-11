@@ -6,6 +6,6 @@ class User < ApplicationRecord
     validates :username, :password_digest, :name, :surname, :address, :email, presence: true, length: { maximum: 255 }
 
   def to_s
-    "Nombre de usuario: #{username} | Rol: #{roles.first.name} | Nombre: #{name} | Apellido: #{surname} | Direccion: #{address} | Email: #{email}"
+    "Nombre de usuario: #{username} | Rol: #{roles.first.name} | Nombre: #{name} | Apellido: #{surname} | Direccion: #{address} | Email: #{email} | Telefono: #{phone}"
   end
 end

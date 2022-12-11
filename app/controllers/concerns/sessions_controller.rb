@@ -1,14 +1,10 @@
 class SessionsController < ApplicationController
   #before action lo tuve que sacar xq no me dejaba deslogearme
   #before_action :set_user, only: %i[ show edit update destroy ]
-    skip_before_action :protect_pages
+  skip_before_action :protect_pages
     
     # GET /users/new
     def new
-      #solo si el usuario no esta logueado, sino levantar errro 404
-      if Current.user
-        raise ActionController::RoutingError.new('Not Found')
-      end
     end
   
     # POST /users

@@ -74,8 +74,11 @@ class TurnsController < ApplicationController
       @turn.state = "attended"
       @turn.result = @result
       @turn.bank_staff = Current.user.id
-      @turn.save
-      redirect_to @turn, notice: "Turn was successfully attended."
+      if @turn.save
+        redirect_to @turn, notice: "Turn was successfully attended."
+      else
+        render :attend, status: :unprocessable_entity
+      end
     end
   end
 
@@ -118,12 +121,12 @@ class TurnsController < ApplicationController
 
   # DELETE /turns/1
   def destroy
-    authorize! :delete, :destroy
-    if @turn.state != "Pendiente"
+    authorize! :delete, :destroyTurn
+    if @turn.state != "attended"
       @turn.destroy
-      redirect_to turns_url, notice: "Turn was successfully destroyed."
+      redirect_to banks_path, notice: "Turn was successfully destroyed."
     else
-      redirect_to turns_url, notice: "Turn was not destroyed because it is pending"
+      redirect_to banks_path, alert: "Turn was not destroyed because it was already attended"      
     end
   end
 

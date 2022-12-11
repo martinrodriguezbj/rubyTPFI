@@ -1,6 +1,6 @@
 class BanksController < ApplicationController
-  load_and_authorize_resource
   before_action :set_bank, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
 
   # GET /banks
@@ -55,11 +55,11 @@ class BanksController < ApplicationController
   # DELETE /banks/1
   def destroy
     #borrar solo si el banco no tiene turnos en state "pending"
-    if @bank.turns.where(state: "Pendiente").empty?
+    if @bank.turns.where(state: "pending").empty?
       @bank.destroy
       redirect_to banks_url, notice: "Bank was successfully destroyed."
     else
-      redirect_to banks_url, notice: "Bank can't be destroyed because it has pending turns."
+      redirect_to banks_url, alert: "Bank can't be destroyed because it has pending turns."
     end
   end
 
