@@ -27,6 +27,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
+    authorize! :read, :index
     @users = User.all
   end
 

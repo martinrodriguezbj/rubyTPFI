@@ -38,11 +38,16 @@ class Ability
       can :read, :index
     elsif user.has_role? :Administrador
       can :manage, Bank
-      can :manage, User
-      can :read, :show
+      can :read, :index
+      can :read, :User
+      can :create, :User
+      can :edit, :User
+      can :delte, :User
       can :manage, Locality
       can :edit, :editSchedule
       can :update, :updateSchedule
+
+      can :read, :show
     end
 
     # Define abilities for the user here. For example:
