@@ -11,11 +11,6 @@
     </div>
   <% end %>
 
-  <%= Current.user.inspect %>
-  Are you admin? <%= Current.user.has_role? :Administrador %>
-  #mostrar todos los roles del usuario
-  
-
   <div>
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name %>
@@ -31,11 +26,12 @@
     <%= form.number_field :phone %>
   </div>
 
-  #se debe seleccionar una localidad
   <div>
     <%= form.label :locality_id, style: "display: block" %>
     <%= form.select :locality_id, options_from_collection_for_select(Locality.all, :id, :locality) %>
   </div>
+
+  <br> 
 
   <div>
     <%= form.submit %>

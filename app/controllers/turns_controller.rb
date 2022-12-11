@@ -27,7 +27,6 @@ class TurnsController < ApplicationController
     #obtener banco
     @bank = Bank.find(@turn.bank_id)
     #obtener personal que atendio el turno
-    @bank_staff = User.find(@turn.bank_staff)
   end
 
   # GET /turns/new
@@ -96,17 +95,13 @@ class TurnsController < ApplicationController
 
   # POST /turns
   def create
-    #obtener el parametro del dia
+    #obtener dia, y nombre del dia
     @day = params[:turn][:day]
-    #obtener que nombre de dia es @day
     @day_name = Date.parse(@day).strftime("%A")
-    #imprimir en consola el nombre del dia de hoy es @day_name
-    puts "el nombre del dia de hoy es #{@day_name}"
+    #crear turno
     @turn = Turn.new(turn_params)
     @turn.user_id = Current.user.id
-    #recibir id de banco pasado por hidden_field
     @idbank = params[:turn][:bank_id]
-    #obtengo el banco con el id recibido
     @bank = Bank.find(@idbank)
     #filtrar el hoario cuyo dia sea igual a @day_name
     @schedule = @bank.schedules.where(day: @day_name)
