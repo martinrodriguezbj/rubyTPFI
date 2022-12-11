@@ -95,49 +95,15 @@ class TurnsController < ApplicationController
 
   # POST /turns
   def create
-    #obtener dia, y nombre del dia
-    @day = params[:turn][:day]
-    @day_name = Date.parse(@day).strftime("%A")
-    #crear turno
     @turn = Turn.new(turn_params)
     @turn.user_id = Current.user.id
-    @idbank = params[:turn][:bank_id]
-    @bank = Bank.find(@idbank)
-    #filtrar el hoario cuyo dia sea igual a @day_name
-    @schedule = @bank.schedules.where(day: @day_name)
-    #obtener el horario del turno recibido
-    @hour = params[:turn][:hour]
-    #obtener los dos primeros caracteres de @hour
-    @hour2 = @hour
-    @hour = @hour.to_s.gsub(":", "").to_i
-    #verificar si el horario del turno recibido esta dentro del horario de atencion de @schedule
-    #obtener startAttention y endAttention de @schedule
-    @startAttention = @schedule.where(day: @day_name).first.startAttention
-    @endAttention = @schedule.where(day: @day_name).first.endAttention
-    puts "COMIENZO DE ATENCION DEL MARTES ES #{@startAttention}"
-    puts "FIN DE ATENCION DEL MARTES ES #{@endAttention}"
-    puts "HORA DEL TURNO ES #{@hour}"
-    #suprimir el ":" de startAttention y endAttention"
-    @startAttention = @startAttention.to_s.gsub(":", "").to_i
-    @endAttention = @endAttention.to_s.gsub(":", "").to_i
-    puts "HORA STARTATTENTION ES #{@startAttention}"
-    puts "HORA ENDATTENTION ES #{@endAttention}"
-    estaEntre = (@startAttention..@endAttention).include?(@hour)
-    #chequear si el banco ya tiene un turno para ese dia y hora
-    ocupado = @bank.turns.where(day: @day, hour: @hour2).exists?
-    puts("El resultado de ocupado es : #{ocupado}")
-    puts "VALOR DE ESTAENTRE ES #{estaEntre}"
-    @turn.bank_id = @idbank
-    #poner state del turno en "sin atender"
-    if ocupado
-      redirect_to new_turn_path(motivo: @idbank), alert: "Turn was not created because the hour is already taken"
-    elsif !estaEntre
-      redirect_to new_turn_path(motivo: @idbank), alert: "Turn was not created because the hour is not between the attention hours of the bank"
-    elsif @turn.save
-      redirect_to @turn, notice: "Turn was successfully created."
+    @turn.state = "pending"
+    @bank = Bank.find(@turn.bank_id)
+    if @turn.save
+      redirect_to @turn, bank: @bank, notice: "Turn was successfully created."
     else
-      render :new, status: :unprocessable_entity
-  end
+      render :new, bank: @bank, status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /turns/1
