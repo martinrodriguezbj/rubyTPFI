@@ -18,14 +18,14 @@ class ProfilesController < ApplicationController
         id = Current.user.id
         @user = User.find(id)
         if @user.update(user_params)
-            redirect_to profiles_path
+            redirect_to profiles_path, notice: "user was successfully updated."
         else
-            render 'edit'
+            render :edit, status: :unprocessable_entity
         end
     end
 
     private
     def user_params
-        params.require(:user).permit(:username, :password)
+        params.require(:user).permit(:username, :password, :name, :surname, :address, :email)
     end
 end

@@ -1,6 +1,45 @@
 <h1>Editing turn</h1>
 
-<%= render "form", turn: @turn %>
+<%= form_with(model: @turn) do |form| %>
+  <% if @turn.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@turn.errors.count, "error") %> prohibited this turn from being saved:</h2>
+
+      <ul>
+        <% @turn.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <h3>Bank: <%= @turn.bank.name %></h3>
+
+  <h3>User: <%= @turn.user.username %></h3>
+
+  <div>
+    <%= form.label :day, style: "display: block" %>
+    <%= form.date_field :day, disabled: true %>
+  </div>
+
+  <h3>Hour: <%= @turn.hour %></h3>
+
+  <div>
+    <%= form.label :reason, style: "display: block" %>
+    <%= form.text_field :reason %>
+  </div>
+
+  <h3>State: <%= @turn.state %></h3>
+
+  <h3>Result: <%= @turn.result %></h3>
+
+  <h3>Attended by: <%= @turn.bank_staff %></h3>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
 
 <br>
 

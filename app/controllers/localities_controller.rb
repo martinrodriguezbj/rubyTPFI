@@ -1,4 +1,5 @@
 class LocalitiesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_locality, only: %i[ show edit update destroy ]
 
   # GET /localities

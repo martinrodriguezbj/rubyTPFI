@@ -42,8 +42,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_180020) do
   create_table "schedules", force: :cascade do |t|
     t.integer "bank_id", null: false
     t.string "day"
-    t.integer "startAttention"
-    t.integer "endAttention"
+    t.string "startAttention"
+    t.string "endAttention"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bank_id"], name: "index_schedules_on_bank_id"
@@ -65,10 +65,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_180020) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.string "password_digest"
-    t.string "roll"
+    t.string "username", null: false
+    t.string "password_digest", null: false
+    t.string "roll", null: false
     t.integer "bank_id"
+    t.string "name", null: false
+    t.string "surname", null: false
+    t.string "phone"
+    t.string "address", null: false
+    t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["username"], name: "index_users_on_username", unique: true

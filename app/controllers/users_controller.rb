@@ -51,10 +51,13 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-    #asignar el id del banco al usuario
-    #obtener el id del banco por parametro
-    bank_id = params[:user][:bank_id]
-    @user.bank_id = bank_id
+    #obtener el rol pasado por parametro
+    rol = params[:user][:roll]
+    #si el rol no es peronal bancario, no se necesita el id del banco
+    if rol != "Personal bancario"
+      #borrar el id del banco en @user
+      @user.bank_id = nil
+    end
     #agregar el rol al usuario
     @user.add_role(user_params[:roll])
     if @user.save
@@ -89,7 +92,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :password, :roll)
+      params.require(:user).permit(:username, :password, :roll, :bank_id, :name, :surname, :address, :email)
     end
 
     def cliente_params

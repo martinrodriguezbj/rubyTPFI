@@ -26,6 +26,8 @@ class TurnsController < ApplicationController
     end
     #obtener banco
     @bank = Bank.find(@turn.bank_id)
+    #obtener personal que atendio el turno
+    @bank_staff = User.find(@turn.bank_staff)
   end
 
   # GET /turns/new
@@ -67,7 +69,7 @@ class TurnsController < ApplicationController
     #recibir el result de turno por parametro
     @result = params[:turn][:result]
     if @result == ""
-      redirect_to attend_turn_path(@turn), alert: "Turn was not attended because the result is empty"
+      render :attend, status: :unprocessable_entity
     else
       @turn = Turn.find(params[:id])
       @turn.state = "attended"
@@ -112,14 +114,19 @@ class TurnsController < ApplicationController
     @hour = params[:turn][:hour]
     #obtener los dos primeros caracteres de @hour
     @hour2 = @hour
-    @hour = @hour[0..1].to_i
+    @hour = @hour.to_s.gsub(":", "").to_i
     #verificar si el horario del turno recibido esta dentro del horario de atencion de @schedule
     #obtener startAttention y endAttention de @schedule
-    @startAttention = @schedule.where(day: @day_name).first.startAttention.to_i
-    @endAttention = @schedule.where(day: @day_name).first.endAttention.to_i
+    @startAttention = @schedule.where(day: @day_name).first.startAttention
+    @endAttention = @schedule.where(day: @day_name).first.endAttention
     puts "COMIENZO DE ATENCION DEL MARTES ES #{@startAttention}"
     puts "FIN DE ATENCION DEL MARTES ES #{@endAttention}"
     puts "HORA DEL TURNO ES #{@hour}"
+    #suprimir el ":" de startAttention y endAttention"
+    @startAttention = @startAttention.to_s.gsub(":", "").to_i
+    @endAttention = @endAttention.to_s.gsub(":", "").to_i
+    puts "HORA STARTATTENTION ES #{@startAttention}"
+    puts "HORA ENDATTENTION ES #{@endAttention}"
     estaEntre = (@startAttention..@endAttention).include?(@hour)
     #chequear si el banco ya tiene un turno para ese dia y hora
     ocupado = @bank.turns.where(day: @day, hour: @hour2).exists?
@@ -133,6 +140,8 @@ class TurnsController < ApplicationController
       redirect_to new_turn_path(motivo: @idbank), alert: "Turn was not created because the hour is not between the attention hours of the bank"
     elsif @turn.save
       redirect_to @turn, notice: "Turn was successfully created."
+    else
+      render :new, status: :unprocessable_entity
   end
   end
 

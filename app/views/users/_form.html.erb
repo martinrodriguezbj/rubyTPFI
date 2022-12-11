@@ -21,6 +21,30 @@
     <%= form.password_field :password %>
   </div>
 
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+
+  <div>
+    <%= form.label :surname, style: "display: block" %>
+    <%= form.text_field :surname %>
+  </div>
+
+
+  <div>
+    <%= form.label :address, style: "display: block" %>
+    <%= form.text_field :address %>
+  </div>
+
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.email_field :email %>
+  </div>
+
   <div>
     <%= form.label :roll, style: "display: block" %>
     <%= form.select :roll, options_for_select([["Administrador", "Administrador"], ["Personal bancario", "Personal bancario"], ["Cliente", "Cliente"]]) %>

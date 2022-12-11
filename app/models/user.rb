@@ -3,9 +3,9 @@ class User < ApplicationRecord
     has_secure_password
     has_many :turns
     
-    validates :username, :password_digest, presence: true, length: { maximum: 255 }
+    validates :username, :password_digest, :name, :surname, :address, :email, presence: true, length: { maximum: 255 }
 
   def to_s
-    string="Nombre de usuario: #{username}"
+    "Nombre de usuario: #{username} | Rol: #{roles.first.name} | Nombre: #{name} | Apellido: #{surname} | Direccion: #{address} | Email: #{email}"
   end
 end
