@@ -9,4 +9,7 @@
   <% end %>
 </div>
 
+
+<% if Current.user.has_role? :Administrador %>
 <%= link_to "New bank", new_bank_path %>
+<% end %>

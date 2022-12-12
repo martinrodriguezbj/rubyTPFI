@@ -9,9 +9,12 @@
 <% end %>
 
 <div>
-  <%= link_to "Attend this turn", attend_turn_path(@turn) %> |
-  <%= link_to "Edit this turn", edit_turn_path(@turn) %> |
-  <%= link_to "Back to turns", turns_path %>
+  <% if Current.user.has_role? :"Personal bancario" %>
+  <%= link_to "Attend this turn", attend_turn_path(@turn) %> <% end %> |
+  <% if Current.user.has_role? :"Cliente" %>
+  <%= link_to "Edit this turn", edit_turn_path(@turn) %>  <% end %> |
 
+  <% if Current.user.has_role? :"Cliente" %>
   <%= button_to "Destroy this turn", @turn, method: :delete %>
+  <% end %>
 </div>

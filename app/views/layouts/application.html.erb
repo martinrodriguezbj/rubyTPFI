@@ -11,27 +11,57 @@
   </head>
 
   <body>
+
+  <% if Current && Current.user %>
   <%= link_to "Banks", banks_path %>
+  <% end %>
 
+  <% if Current && Current.user %>
+  <% if Current.user.has_role? :Administrador %>
   <%= link_to "Localities", localities_path %>
+  <% end %>
+  <% end %>
 
+  <% if Current && Current.user %>
+  <% if Current.user.has_role? :"Personal bancario" %>
   <%= link_to "Clients", index_client_path %>
+  <% end %>
+  <% end %>
 
+  <% if Current && Current.user %>
+  <% if Current.user.has_role? :"Cliente" %>
   <%= link_to "Past turns", past_turns_path %>
+  <% end %>
+  <% end %>
 
+  <% if Current && Current.user %>
+  <% if Current.user.has_role? :"Cliente" %>
   <%= link_to "Future turns", future_turns_path %>
+  <% end %>
+  <% end %>
 
+  <% if Current && Current.user %>
+  <% if Current.user.has_role? :"Administrador" %>
   <%= link_to "Users", users_path %>
+  <% end %>
+  <% end %>
   
+  <% if Current && Current.user %>
   <%= link_to "My profile", profiles_path %>
+  <% end %>
+
   <%= link_to ('logout'), session_path(Current.user.id), data: {
   turbo_method: :delete,
   turbo_confirm: ('are you sure?')
 } if Current.user %>
 
+<% if !Current.user %>
   <%= link_to "Login", new_session_path%>
+  <% end %>
 
+  <% if !Current.user %>
   <%= link_to "Sign up", signup_path%>
+  <% end %>
  
   <%= render "shared/flash" %>
   <%= yield %>

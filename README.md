@@ -30,5 +30,3 @@ Cada banco al crearse genera los horarios para los 5 días habiles de la semana 
 Para hacer funcionar la aplicación habrá que instalar las gemas con bundle install, y luego solo hay que correr rails 
 para cargar los seeds: rails db:seed
 por alguna razón que desconozco hasta el día de la entrega, los usuarios creados por seed no se crean con la contraseña hasheada, entonces no me permite logearme con ellos, tengo que crear un usuario admin desde el front y con el cambiarle la contraseña a los usuarios creados desde el seed para así poder acceder con ellos también
-
-Tampoco pude ocultar enlaces que no corresponden a ciertos roles, cancancan me ocacionó algunos problemas. pero las rutas estan debidamente protegidas de todas formas
