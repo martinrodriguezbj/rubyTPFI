@@ -5,6 +5,9 @@ class SessionsController < ApplicationController
     
     # GET /users/new
     def new
+      if Current.user
+        raise ActionController::RoutingError.new('Not Found')
+      end
     end
   
     # POST /users
