@@ -21,12 +21,17 @@ class TurnsController < ApplicationController
     authorize! :read, :show
     #consultar si el turno le pertenece al cliente o es del banco del personal bancario
     if @turn.user_id != Current.user.id && @turn.bank_id != Current.user.bank_id
+      print("ENTREEEEEEEEEEEEEEEEEEEEEEEEE Y NO SE PORQUEEEEEEEEEEEEEEEEEEEEEEEE  ")
       #levantar excepcion RoutingError
       raise ActionController::RoutingError.new('Not Found')
     end
     #obtener banco
     @bank = Bank.find(@turn.bank_id)
     #obtener personal que atendio el turno
+    #preguntar si turn tiene bank_staff
+    if @turn.bank_staff
+      @bank_staff = User.find(@turn.bank_staff)
+    end
   end
 
   # GET /turns/new
