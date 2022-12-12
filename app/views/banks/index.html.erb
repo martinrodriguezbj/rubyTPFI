@@ -3,7 +3,6 @@
 <div id="banks">
   <% @banks.each do |bank| %>
     <%= render bank %>
-    <p>Cantidad de turnos: <%= bank.turns.count %></p>
     <p>
       <%= link_to "Show this bank", bank %>
     </p>
