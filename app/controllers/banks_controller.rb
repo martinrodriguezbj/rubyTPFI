@@ -55,7 +55,11 @@ class BanksController < ApplicationController
   # DELETE /banks/1
   def destroy
     #borrar solo si el banco no tiene turnos en state "pending"
-    if @bank.turns.where(state: "pending").empty?
+    #buscar un usuario cuyo bank_id sea igual al id del banco, y traer el primero
+    usuario = User.find_by(bank_id: @bank.id)
+    if usuario
+      redirect_to banks_url, alert: "Bank can't be destroyed because it has employes."
+    elsif @bank.turns.where(state: "pending").empty?
       @bank.destroy
       redirect_to banks_url, notice: "Bank was successfully destroyed."
     else

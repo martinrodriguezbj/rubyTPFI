@@ -12,9 +12,45 @@ Locality.create(locality: "Lobos", province: "Buenos Aires")
 
 
 
-Bank.create(name:"Banco de la Nacion", address: "Av. Arequipa 123", phone: "123456789", locality_id: 1)
-Bank.create(name:"Banco de Credito", address: "Av. Arequipa 123", phone: "123456789", locality_id: 1)
-Bank.create(name:"Banco de la Provincia", address: "Av. Arequipa 123", phone: "123456789", locality_id: 2)
+bank1 = Bank.create(name:"Banco de la Nacion", address: "Av. Arequipa 123", phone: "123456789", locality_id: 1)
+bank2 = Bank.create(name:"Banco de Credito", address: "Av. Arequipa 123", phone: "123456789", locality_id: 1)
+bank3 = Bank.create(name:"Banco de la Provincia", address: "Av. Arequipa 123", phone: "123456789", locality_id: 2)
+
+@schedule1 = Schedule.new(day: "Monday", startAttention: nil, endAttention: nil)
+@schedule2 = Schedule.new(day: "Tuesday", startAttention: nil, endAttention: nil)
+@schedule3 = Schedule.new(day: "Wednesday", startAttention: nil, endAttention: nil)
+@schedule4 = Schedule.new(day: "Thursday", startAttention: nil, endAttention: nil)
+@schedule5 = Schedule.new(day: "Friday", startAttention: nil, endAttention: nil)
+
+bank1.schedules << @schedule1
+bank1.schedules << @schedule2
+bank1.schedules << @schedule3
+bank1.schedules << @schedule4
+bank1.schedules << @schedule5
+
+@schedule1 = Schedule.new(day: "Monday", startAttention: nil, endAttention: nil)
+@schedule2 = Schedule.new(day: "Tuesday", startAttention: nil, endAttention: nil)
+@schedule3 = Schedule.new(day: "Wednesday", startAttention: nil, endAttention: nil)
+@schedule4 = Schedule.new(day: "Thursday", startAttention: nil, endAttention: nil)
+@schedule5 = Schedule.new(day: "Friday", startAttention: nil, endAttention: nil)
+
+bank2.schedules << @schedule1
+bank2.schedules << @schedule2
+bank2.schedules << @schedule3
+bank2.schedules << @schedule4
+bank2.schedules << @schedule5
+
+@schedule1 = Schedule.new(day: "Monday", startAttention: nil, endAttention: nil)
+@schedule2 = Schedule.new(day: "Tuesday", startAttention: nil, endAttention: nil)
+@schedule3 = Schedule.new(day: "Wednesday", startAttention: nil, endAttention: nil)
+@schedule4 = Schedule.new(day: "Thursday", startAttention: nil, endAttention: nil)
+@schedule5 = Schedule.new(day: "Friday", startAttention: nil, endAttention: nil)
+
+bank3.schedules << @schedule1
+bank3.schedules << @schedule2
+bank3.schedules << @schedule3
+bank3.schedules << @schedule4
+bank3.schedules << @schedule5
 
 #crear 1 usuario administrador
 usuario = User.create(username: "admin", password_digest: "1234", roll: "Administrador", name: "Steve", surname: "Jobs", phone: "123456789", address: "Calle falsa 123", email: "stevejobs@gmail.com")
