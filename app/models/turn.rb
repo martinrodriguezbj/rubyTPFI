@@ -29,9 +29,9 @@ class Turn < ApplicationRecord
       #chequear si el turno ya se encuentra ocupado, y si ese turno no es el actual
       ocupado = @bank.turns.where(day: day, hour: hour).exists? && @bank.turns.where(day: day, hour: hour).first.id != id
       if !estaEntre
-        errors.add(:day, "is not valid, the bank is not open at that time")
+        errors.add(:hour, "is not valid, the bank is not open at that time")
       elsif ocupado
-        errors.add(:day, "is not valid, the bank is already occupied at that time")
+        errors.add(:hour, "is not valid, the bank is already occupied at that time")
       end
     end
   end

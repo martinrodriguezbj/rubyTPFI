@@ -38,7 +38,7 @@ class Ability
       can :read, :index
     elsif user.has_role? :Administrador
       can :manage, Bank
-      can :read, :index
+      can :read, :indexUsers
       can :read, :User
       can :create, :User
       can :edit, :User
