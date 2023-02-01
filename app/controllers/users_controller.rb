@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   skip_before_action :protect_pages , only: [:newCliente, :createCliente]
 
   def newCliente
-    #solo si el usuario no esta logueado, sino levantar errro 404
     if Current.user
       raise ActionController::RoutingError.new('Not Found')
     end
@@ -17,7 +16,6 @@ class UsersController < ApplicationController
     @user.roll = "Cliente"
     @user.add_role("Cliente")
     if @user.save
-      #redireccionar a session new
       redirect_to new_session_path, notice: "User was successfully created."
     else
       render :newCliente, status: :unprocessable_entity
@@ -56,14 +54,10 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-    #obtener el rol pasado por parametro
     rol = params[:user][:roll]
-    #si el rol no es peronal bancario, no se necesita el id del banco
     if rol != "Personal bancario"
-      #borrar el id del banco en @user
       @user.bank_id = nil
     end
-    #agregar el rol al usuario
     @user.add_role(user_params[:roll])
     if @user.save
       redirect_to @user, notice: "User was successfully created."

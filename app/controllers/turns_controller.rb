@@ -3,32 +3,29 @@ class TurnsController < ApplicationController
   before_action :set_turn, only: %i[ show edit update destroy attend]
   skip_authorize_resource
  
+
   # GET /turns
+  #consulto si el @motivo recibido es igual a el bank del usuario, 
+  #si es asi, solo aquellos turnos que no esten attended
   def index
     authorize! :read, :index
     @motivo_recibido = params[:motivo]
-    #consultar si el @motivo recibido es igual a el bank del usuario
     @bank = Bank.find(@motivo_recibido)
     if @motivo_recibido.to_i == Current.user.bank_id.to_i
-      @turns = @bank.turns
+      @turns = Turn.where(bank_id: @motivo_recibido, state: "pending")
     else
       redirect_to @bank
     end
   end
 
   # GET /turns/1
+  #muestro turno, solo si le pertenece al cliente o es del banco del personal bancario
   def show
     authorize! :read, :show
-    #consultar si el turno le pertenece al cliente o es del banco del personal bancario
     if @turn.user_id != Current.user.id && @turn.bank_id != Current.user.bank_id
-      print("ENTREEEEEEEEEEEEEEEEEEEEEEEEE Y NO SE PORQUEEEEEEEEEEEEEEEEEEEEEEEE  ")
-      #levantar excepcion RoutingError
       raise ActionController::RoutingError.new('Not Found')
     end
-    #obtener banco
     @bank = Bank.find(@turn.bank_id)
-    #obtener personal que atendio el turno
-    #preguntar si turn tiene bank_staff
     if @turn.bank_staff
       @bank_staff = User.find(@turn.bank_staff)
     end
@@ -38,21 +35,18 @@ class TurnsController < ApplicationController
   def new
     authorize! :create, :Turn
     @turn = Turn.new
-    #obtener primer banco
-    #@bank = Bank.first
     @motivo_recibido = params[:motivo]
     @bank = Bank.find(@motivo_recibido)
   end
 
   # GET /turns/1/edit
+  #consulto si el turno le pertenece al cliente o es del banco del personal bancario.
+  #si es asi, solo se puede editar el turno si el estado es "Pendiente"
   def edit
     authorize! :edit, :edit
-    #consultar si el turno le pertenece al cliente o es del banco del personal bancario
     if @turn.user_id != Current.user.id
-      #levantar excepcion RoutingError
       raise ActionController::RoutingError.new('Not Found')
     end
-    #solo se puede editar el turno si el estado es "Pendiente"
     if @turn.state != "pending"
       redirect_to @turn, alert: "Turn was not edited because it was already attended"
     end
@@ -62,7 +56,6 @@ class TurnsController < ApplicationController
   def attend
     authorize! :update, :attend
     @turn =  Turn.find(params[:id])
-    #seguir solo si el turno no es "attended"
     if @turn.state == "attended"
       redirect_to @turn, alert: "Turn was not attended because it was already attended"
     end
@@ -70,10 +63,9 @@ class TurnsController < ApplicationController
   
   # PATCH/PUT /turns/1
   def attended
-    #recibir el result de turno por parametro
     @result = params[:turn][:result]
     if @result == ""
-      render :attend, status: :unprocessable_entity
+      redirect_to attend_turn_path(params[:id]), alert: "Result can't be blank"
     else
       @turn = Turn.find(params[:id])
       @turn.state = "attended"
@@ -88,14 +80,12 @@ class TurnsController < ApplicationController
   end
 
   def past_turns
-    #mostrar los turnos del usuario actua si dia es menor a hoy
     @user = Current.user
     @turns = @user.turns.where("day < ?", Date.today)
     authorize! :read, :past_turns
   end
 
   def future_turns
-    #mostrar los turnos del usuario actua si dia es mayor o igual a hoy
     @user = Current.user
     @turns = @user.turns.where("day >= ?", Date.today)
     authorize! :read, :future_turns

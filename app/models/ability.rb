@@ -42,7 +42,7 @@ class Ability
       can :read, :User
       can :create, :User
       can :edit, :User
-      can :delte, :User
+      can :delete, :User
       can :manage, Locality
       can :edit, :editSchedule
       can :update, :updateSchedule

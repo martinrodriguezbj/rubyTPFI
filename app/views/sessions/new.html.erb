@@ -1,12 +1,14 @@
 <%= form_with(url: sessions_path) do |form| %>
+
+   <h1>Login</h1>
   
     <div>
-      <%= form.label :login, style: "display: block" %>
+      <%= form.label :Username, style: "display: block" %>
       <%= form.text_field :login %>
     </div>
   
     <div>
-      <%= form.label :password_digest, style: "display: block" %>
+      <%= form.label :Password, style: "display: block" %>
       <%= form.password_field :password_digest %>
     </div>
   

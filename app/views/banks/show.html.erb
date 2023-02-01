@@ -8,20 +8,22 @@ Localidad: <%= @bank.locality.locality %>, <%= @bank.locality.province %>
 <%if schedule.startAttention && schedule.endAttention%>
 <%= schedule.day %> <%= schedule.startAttention %> a <%= schedule.endAttention %>hs
 <%else%>
-<%= schedule.day %> |no atiende|
+<%= schedule.day %> |no attention|
 <% end %>
 <% end %>
 </div>
 
 <div>
+  <% if Current.user.bank_id == @bank.id %>
   <% if Current.user.has_role? :"Personal bancario" %>
-  <%= link_to "Show turns for this bank", turns_path(:motivo => @bank.id) %>
+  <%= link_to "Show turns for this bank", turns_path(:motivo => @bank.id) %> |
+  <% end %>
   <% end %>
   
   <% if can? :edit, @bank %>
-  <%= link_to "Edit this bank", edit_bank_path(@bank) %> <%end%> | 
+  <%= link_to "Edit this bank", edit_bank_path(@bank) %> <%end%> 
   <% if Current.user.has_role? :"Cliente" %>
-  <%= link_to "Request turn", new_turn_path(:motivo => @bank.id) %> <% end %> |
+  <%= link_to "Request turn", new_turn_path(:motivo => @bank.id) %> <% end %>
   <%= link_to "Back to banks", banks_path %>
 
   <% if can? :edit, @bank %>

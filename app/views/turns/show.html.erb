@@ -9,12 +9,17 @@
 <% end %>
 
 <div>
+  <% if @turn.state == "pending" %>
   <% if Current.user.has_role? :"Personal bancario" %>
-  <%= link_to "Attend this turn", attend_turn_path(@turn) %> <% end %> |
+  <%= link_to "Attend this turn", attend_turn_path(@turn) %> <% end %>  <% end %>
+  <% if @turn.state == "pending" %>
   <% if Current.user.has_role? :"Cliente" %>
-  <%= link_to "Edit this turn", edit_turn_path(@turn) %>  <% end %> |
+  <%= link_to "Edit this turn", edit_turn_path(@turn) %>  <% end %> <% end %>
+
 
   <% if Current.user.has_role? :"Cliente" %>
+  <% if @turn.state != "attended" %>
   <%= button_to "Destroy this turn", @turn, method: :delete %>
+  <% end %>
   <% end %>
 </div>

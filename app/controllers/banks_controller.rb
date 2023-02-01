@@ -30,7 +30,7 @@ class BanksController < ApplicationController
     @schedule3 = Schedule.new(day: "Wednesday", startAttention: nil, endAttention: nil)
     @schedule4 = Schedule.new(day: "Thursday", startAttention: nil, endAttention: nil)
     @schedule5 = Schedule.new(day: "Friday", startAttention: nil, endAttention: nil)
-    #guardaer todos los schedules en el banco
+    #guardar todos los schedules en el banco
     @bank.schedules << @schedule1
     @bank.schedules << @schedule2
     @bank.schedules << @schedule3

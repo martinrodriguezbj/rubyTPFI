@@ -47,13 +47,13 @@
 
   <div>
   <%= form.label :phone, style: "display: block" %>
-  <%= form.text_field :phone %>
+  <%= form.number_field :phone %>
   </div>
 
-  <div>
+  <div id="roll" style="display: block">
     <%= form.label :roll, style: "display: block" %>
-    <%= form.select :roll, options_for_select([["Administrador", "Administrador"], ["Personal bancario", "Personal bancario"]]), onchange: "showBankId()" %>
-  </div>
+    <%= form.select :roll, options_for_select([["Personal bancario", "Personal bancario"  ], ["Administrador", "Administrador"]]) %>
+    </div>
   
   <div id="bank_id" style="display: block">
     <%= form.label :bank_id, style: "display: block" %>
@@ -61,19 +61,20 @@
   </div>
 
   <script>
-     function showBankId() {
-      var x = document.getElementById("roll").value;
-      if (x == "Personal bancario") {
-        document.getElementById("bank_id").style.display = "block";
-      } else {
-        document.getElementById("bank_id").style.display = "none";
-      }
-    }
+        var x = document.getElementById("roll");
+        y = x.getElementsByTagName("select")[0];
+        x.addEventListener("change", function(){
+          if (y.value == "Administrador") {
+            document.getElementById("bank_id").style.display = "none";
+          } else {
+            document.getElementById("bank_id").style.display = "block";
+          }
+        }, false);
   </script>
   
-
 
   <div>
     <%= form.submit %>
   </div>
+
 <% end %>

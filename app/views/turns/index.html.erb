@@ -1,9 +1,13 @@
 <h1>Turns of bank <%= @bank.name %></h1>
 
-Fecha       Hora  Motivo
-<% @bank.turns.each do |turn| %>
-  <div>
-  <%= turn %> |
-  <%= link_to "Show this turn", turn %>
-  </div>
-<% end %>
+<% if @turns.any? %>
+  Fecha       Hora  Motivo
+  <% @turns.each do |turn| %>
+    <div>
+    <%= turn %> |
+    <%= link_to "Show this turn", turn %>
+    </div>
+  <% end %>
+<% else %>
+    <p>There are no pending turns</p>
+<% end %> 
