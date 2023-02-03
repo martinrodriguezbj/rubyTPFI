@@ -21,6 +21,11 @@ class Turn < ApplicationRecord
       @bank = Bank.find(bank_id)
       @schedule = @bank.schedules.where(day: @day_name)
       @hour = hour.to_s.gsub(":", "").to_i
+      #si el dia es sabado o domingo, no se puede crear un turno
+      if @day_name == "Saturday" || @day_name == "Sunday"
+        errors.add(:day, "is not valid, the bank is closed on weekends")
+        return
+      end
       @startAttention = @schedule.where(day: @day_name).first.startAttention
       @endAttention = @schedule.where(day: @day_name).first.endAttention
       @startAttention = @startAttention.to_s.gsub(":", "").to_i

@@ -6,7 +6,7 @@ class ProfilesController < ApplicationController
         id = Current.user.id
         #obtener el usuario correspondiente al id
         @user = User.find(id)
-        authorize! :read, :show
+        authorize! :read, :showProfile
     end
 
     def edit

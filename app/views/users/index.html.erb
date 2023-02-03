@@ -1,12 +1,45 @@
 <h1>Users</h1>
-
-<div id="users">
+<h4><%= link_to "New user", new_user_path %></h4>
+<% if @users.any? %>
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Rol</th>
+    <th>Name</th>
+    <th>Lastname</th>
+    <th>Address</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Action</th>
+  </tr>
   <% @users.each do |user| %>
-    <%= user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
+    <tr>
+      <td><%= user.username %></td>
+      <td><%= user.roll %></td>
+      <td><%= user.name %></td>
+      <td><%= user.surname %></td>
+      <td><%= user.address %></td>
+      <td><%= user.email %></td>
+      <td><%= user.phone %></td>
+      <td><%= link_to "Show this user", user %></td>
+    </tr>
   <% end %>
-</div>
+</table>
+<% else %>
+  <p>There are no clients</p>
+<% end %> 
 
-<%= link_to "New user", new_user_path %>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+}
+
+th{
+  text-align: left;
+}
+</style>

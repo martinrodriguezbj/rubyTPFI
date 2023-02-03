@@ -21,7 +21,7 @@ class TurnsController < ApplicationController
   # GET /turns/1
   #muestro turno, solo si le pertenece al cliente o es del banco del personal bancario
   def show
-    authorize! :read, :show
+    authorize! :read, :showTurn
     if @turn.user_id != Current.user.id && @turn.bank_id != Current.user.bank_id
       raise ActionController::RoutingError.new('Not Found')
     end
@@ -43,7 +43,7 @@ class TurnsController < ApplicationController
   #consulto si el turno le pertenece al cliente o es del banco del personal bancario.
   #si es asi, solo se puede editar el turno si el estado es "Pendiente"
   def edit
-    authorize! :edit, :edit
+    authorize! :edit, :editTurn
     if @turn.user_id != Current.user.id
       raise ActionController::RoutingError.new('Not Found')
     end

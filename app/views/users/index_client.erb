@@ -1,10 +1,43 @@
 <h1>Clients</h1>
 
-<div id="users">
+<% if @users.any? %>
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Rol</th>
+    <th>Name</th>
+    <th>Lastname</th>
+    <th>Address</th>
+    <th>Email</th>
+    <th>Phone</th>
+  </tr>
   <% @users.each do |user| %>
-    <%= user %>
-    <p>
-
-    </p>
+    <tr>
+      <td><%= user.username %></td>
+      <td><%= user.roll %></td>
+      <td><%= user.name %></td>
+      <td><%= user.surname %></td>
+      <td><%= user.address %></td>
+      <td><%= user.email %></td>
+      <td><%= user.phone %></td>
+    </tr>
   <% end %>
-</div>
+</table>
+<% else %>
+  <p>There are no clients</p>
+<% end %> 
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+}
+
+th{
+  text-align: left;
+}
+</style>

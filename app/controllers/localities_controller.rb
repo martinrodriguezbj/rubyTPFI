@@ -42,8 +42,13 @@ class LocalitiesController < ApplicationController
 
   # DELETE /localities/1
   def destroy
-    @locality.destroy
-    redirect_to localities_url, notice: "Locality was successfully destroyed."
+    #consultar si algun banco tiene esta localidad
+    if Bank.where(locality_id: @locality.id).first
+      redirect_to localities_url, alert: "Cannot delete a locality that has associated banks."
+    else
+      @locality.destroy
+      redirect_to localities_url, notice: "Locality was successfully destroyed."
+    end
   end
 
   private

@@ -10,7 +10,7 @@ class SchedulesController < ApplicationController
         authorize! :update, :updateSchedule
         @schedule = Schedule.find(params[:id])
         if @schedule.update(schedule_params)
-            redirect_to Bank.find(@schedule.bank_id)
+            redirect_to Bank.find(@schedule.bank_id), notice: "Schedule was successfully updated."
         else
             render :editSchedule, status: :unprocessable_entity
         end

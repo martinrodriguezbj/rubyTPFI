@@ -4,7 +4,7 @@ class User < ApplicationRecord
     has_many :turns
     
     validates :username, :name, :surname, :address, :email, presence: true, length: { maximum: 255 }
-    validate :passswordValidate, :nameValidate, :surnameValidate, :emailValidate, :phoneValidate, :addressValidate
+    validate :passswordValidate, :nameValidate, :surnameValidate, :emailValidate, :phoneValidate, :addressValidate, :usernameValidate
 
   def to_s
     "Nombre de usuario: #{username} | Rol: #{roles.first.name} | Nombre: #{name} | Apellido: #{surname} | Direccion: #{address} | Email: #{email} | Telefono: #{phone}"
@@ -16,6 +16,13 @@ class User < ApplicationRecord
       errors.add(:password, "must contain at least one lowercase letter, one uppercase letter and one digit")
     end
   end
+
+  #username no puede repetirse entre los usuarios
+  def usernameValidate
+    if username.present? && User.where(username: username).any?
+      errors.add(:username, "must be unique")
+    end
+  end  
 
   #verificar que el name y surname sean solo letras
   def nameValidate

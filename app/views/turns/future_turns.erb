@@ -1,10 +1,41 @@
 <h1>Future turns</h1>
 
-<div id="turns">
+<% if @turns.any? %>
+<table>
+  <tr>
+    <th>Bank</th>
+    <th>Date</th>
+    <th>Hour</th>
+    <th>Reason</th>
+    <th>State</th>
+    <th>Action</th>
+  </tr>
   <% @turns.each do |turn| %>
-    <%= turn %>
-    <p>
-      <%= link_to "Show this turn", turn %>
-    </p>
+    <tr>
+      <td><%= turn.bank.name %></td>
+      <td><%= turn.day %></td>
+      <td><%= turn.hour %></td>
+      <td><%= turn.reason %></td>
+      <td><%= turn.state %></td>
+      <td><%= link_to "Show this turn", turn %></td>
+    </tr>
   <% end %>
-</div>
+</table>
+<% else %>
+  <p>There are no future turns</p>
+<% end %> 
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+}
+
+th{
+  text-align: left;
+}
+</style>
