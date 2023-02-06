@@ -7,6 +7,7 @@ Una persona y un banco pueden tener muchos turnos y un turno corresponde unicame
 La manera de cancelar un turno que elegí es la de eliminarlo totalmente del sistema.
 
 Un banco pertenece a una única localidad, y esta puede albergar muchos bancos.
+Una localidad que ya alberga un banco no puede ser eliminada del sistema, lo mismo un banco que ya tenga empleados tampoco puede ser eliminado.
 Cada banco al crearse genera los horarios para los 5 días habiles de la semana (lunes a viernes), con horarios en nil. Una vez creado el banco el administrador podrá editar los horarios del mismo.
 
 Para hacer funcionar la aplicación habrá que instalar las gemas con bundle install, y luego solo hay que correr rails .
