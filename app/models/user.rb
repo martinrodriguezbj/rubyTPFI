@@ -17,9 +17,9 @@ class User < ApplicationRecord
     end
   end
 
-  #username no puede repetirse entre los usuarios
+  #username no puede repetirse entre los usuarios y el username no es el del actual usuario
   def usernameValidate
-    if username.present? && User.where(username: username).any?
+    if username.present? && User.where(username: username).any? && User.where(username: username).first.id != id
       errors.add(:username, "must be unique")
     end
   end  

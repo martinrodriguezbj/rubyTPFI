@@ -16,25 +16,19 @@
 
   <h3>Bank: <%= @turn.bank.name %></h3>
 
-  <h3>User: <%= @turn.user.username %></h3>
-
   <div>
-    <%= form.label :day, style: "display: block" %>
+    <h3><%= form.label :day, style: "display: block" %></h3>
     <%= form.date_field :day, disabled: true %>
   </div>
 
   <h3>Hour: <%= @turn.hour %></h3>
 
+  <h3>State: <%= @turn.state %></h3>
+
   <div>
     <%= form.label :reason, style: "display: block" %>
     <%= form.text_field :reason %>
   </div>
-
-  <h3>State: <%= @turn.state %></h3>
-
-  <h3>Result: <%= @turn.result %></h3>
-
-  <h3>Attended by: <%= @turn.bank_staff %></h3>
 
   <div>
     <%= form.submit %>

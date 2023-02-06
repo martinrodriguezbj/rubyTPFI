@@ -35,7 +35,6 @@ class Ability
       can :manage, Locality
       can :edit, :editSchedule
       can :update, :updateSchedule
-      #can :read, :show
     end
     
   end
